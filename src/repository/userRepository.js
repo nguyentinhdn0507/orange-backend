@@ -30,8 +30,9 @@ async function AddUser(user) {
   return newUser;
 }
 async function UpdateRepo() {
-  // const files = await Files.find();
-  // return files;
+  const query = { username: [username], password: [password] };
+  const user = await User.findOneAndUpdate(query);
+  return user;
 }
 
 module.exports = { findByUserName, findUser, findAllRepo, AddUser, UpdateRepo };

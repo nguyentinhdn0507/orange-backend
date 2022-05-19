@@ -27,4 +27,4 @@ async function FindAllRepo() {
   return files;
 }
 
-module.exports = { AddFile, FindAllRepo, UpdateRepo };
+module.exports = { AddFile, FindAllRepo };
