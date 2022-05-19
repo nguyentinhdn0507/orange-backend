@@ -8,11 +8,15 @@ userController.get("/", async (req, res) => {
 });
 
 userController.post("/login", async (req, res) => {
-  // Authen(req, res);
   Login(req, res);
 });
+
 userController.post("/register", async (req, res) => {
   Register(req, res);
+});
+
+userController.put("/register", async (req, res) => {
+  Update(req, res);
 });
 
 module.exports = userController;

@@ -3,6 +3,7 @@ const {
   findAllRepo,
   AddUser,
   findByUserName,
+  UpdateRepo,
 } = require("../repository/userRepository");
 const md5 = require("md5");
 
@@ -14,7 +15,7 @@ async function Login(req, res) {
     return res.status(400).json({ message: "Dang nhap that bai" }).end();
   }
 }
-
+//Get All
 async function ListAll(req, res) {
   const listAllUser = await findAllRepo();
   if (listAllUser) {
@@ -23,6 +24,7 @@ async function ListAll(req, res) {
     return res.status(400).json({ message: "Loi" }).end();
   }
 }
+// Register
 async function Register(req, res) {
   const existUserName = await findByUserName(req.body.username);
   if (!existUserName) {
@@ -43,5 +45,16 @@ async function Register(req, res) {
     return res.status(400).json({ message: "Ten dang nhap da ton tai" }).end();
   }
 }
+//Update
 
-module.exports = { Login, ListAll, Register };
+async function Update(req, res) {
+  // UpdateRepo
+  // const login = await findUser(req.body.username, md5(req.body.password));
+  // if (login) {
+  //   return res.status(200).json({ message: "Dang nhap thanh cong" }).end();
+  // } else {
+  //   return res.status(400).json({ message: "Dang nhap that bai" }).end();
+  // }
+}
+
+module.exports = { Login, ListAll, Register, Update };

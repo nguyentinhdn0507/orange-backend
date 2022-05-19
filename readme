@@ -1,3 +1,3 @@
 step 1 : viết controller
-step 2: viết service nhận các hàm từ controller
-step 3 : viết repository
+step 2 : viết repository
+step 2:  viết service nhận các hàm từ Repository
