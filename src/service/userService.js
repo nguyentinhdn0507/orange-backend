@@ -48,13 +48,11 @@ async function Register(req, res) {
 //Update
 
 async function Update(req, res) {
-  // UpdateRepo
-  // const login = await findUser(req.body.username, md5(req.body.password));
-  // if (login) {
-  //   return res.status(200).json({ message: "Dang nhap thanh cong" }).end();
-  // } else {
-  //   return res.status(400).json({ message: "Dang nhap that bai" }).end();
-  // }
+  const update = await UpdateRepo(req.body.username, md5(req.body.password));
+  if (update.modifiedCount == 0) {
+    return res.status(400).json(update).end();
+  }
+  return res.status(200).json(update).end();
 }
 
 module.exports = { Login, ListAll, Register, Update };

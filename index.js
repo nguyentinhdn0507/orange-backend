@@ -15,7 +15,7 @@ const main = () => {
   app.use(express.json());
   app.use("/user", userController);
   app.use("/data", dataController);
-  app.use("/upload", uploadController);
+  app.use("/datafile", uploadController);
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
   });

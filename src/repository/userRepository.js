@@ -29,9 +29,12 @@ async function AddUser(user) {
   console.log(newUser);
   return newUser;
 }
-async function UpdateRepo() {
-  const query = { username: [username], password: [password] };
-  const user = await User.findOneAndUpdate(query);
+async function UpdateRepo(username, password) {
+  const user = await User.updateOne(
+    { username: username },
+    { password: password }
+  );
+  console.log("user", user);
   return user;
 }
 

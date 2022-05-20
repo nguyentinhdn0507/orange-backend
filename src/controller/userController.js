@@ -1,5 +1,5 @@
 const express = require("express");
-const { Login, ListAll, Register } = require("../service/userService");
+const { Login, ListAll, Register, Update } = require("../service/userService");
 const userController = express.Router();
 
 userController.get("/", async (req, res) => {
@@ -15,7 +15,7 @@ userController.post("/register", async (req, res) => {
   Register(req, res);
 });
 
-userController.put("/register", async (req, res) => {
+userController.put("/", async (req, res) => {
   Update(req, res);
 });
 
