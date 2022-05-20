@@ -6,6 +6,7 @@ const dataController = require("./src/controller/dataController");
 const uploadController = require("./src/controller/upLoadController");
 require("dotenv").config();
 const cors = require("cors");
+const downloadController = require("./src/controller/downloadController");
 const port = process.env.PORT;
 
 const main = () => {
@@ -16,6 +17,7 @@ const main = () => {
   app.use("/user", userController);
   app.use("/data", dataController);
   app.use("/datafile", uploadController);
+  app.use("/download", downloadController);
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
   });

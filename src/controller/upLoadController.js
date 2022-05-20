@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 const maxSize = 1024 * 1024 * 20;
 const upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 uploadController.post("/", (req, res) => {
-  const uploadFile = upload.single("Napa");
+  const uploadFile = upload.single("file");
   uploadFile(req, res, async (err) => {
     UploadService(req, res);
   });

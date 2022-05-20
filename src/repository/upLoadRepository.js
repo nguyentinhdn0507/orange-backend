@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+// const schema = new mongoose.Schema({})
 const schema = new mongoose.Schema({
   fieldname: "String",
   originalname: "String",
@@ -11,7 +12,12 @@ const schema = new mongoose.Schema({
   dateUpload: "Date",
   //   destination:"String"
 });
+
 const Files = mongoose.model("File", schema);
+async function findByIdRepo(id) {
+  const result = await Files.findOne({ _id: mongoose.Types.ObjectId(id) });
+  return result;
+}
 async function AddFile(file) {
   const newFile = new Files(file);
   await newFile.save(function (err) {
@@ -27,4 +33,4 @@ async function FindAllRepo() {
   return files;
 }
 
-module.exports = { AddFile, FindAllRepo };
+module.exports = { AddFile, FindAllRepo, findByIdRepo };
