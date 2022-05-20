@@ -28,9 +28,13 @@ async function AddFile(file) {
   console.log(newFile);
   return newFile;
 }
+async function DeleteOneRepo(id) {
+  const result = await Files.deleteOne({ _id: mongoose.Types.ObjectId(id) });
+  return result;
+}
 async function FindAllRepo() {
   const files = await Files.find();
   return files;
 }
 
-module.exports = { AddFile, FindAllRepo, findByIdRepo };
+module.exports = { AddFile, FindAllRepo, findByIdRepo, DeleteOneRepo };

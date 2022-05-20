@@ -2,7 +2,11 @@ const express = require("express");
 const uploadController = express.Router();
 const multer = require("multer");
 const path = require("path");
-const { UploadService, FindAllService } = require("../service/upLoadService");
+const {
+  UploadService,
+  FindAllService,
+  DeleteService,
+} = require("../service/upLoadService");
 // set up store
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -24,6 +28,7 @@ const storage = multer.diskStorage({
 const maxSize = 1024 * 1024 * 20;
 const upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 uploadController.post("/", (req, res) => {
+  console.log("first");
   const uploadFile = upload.single("file");
   uploadFile(req, res, async (err) => {
     UploadService(req, res);
@@ -31,6 +36,9 @@ uploadController.post("/", (req, res) => {
 });
 uploadController.get("/", async (req, res) => {
   await FindAllService(req, res);
+});
+uploadController.delete("/:id", async (req, res) => {
+  await DeleteService(req, res);
 });
 // uploadRouter.post("/multiplefile", (req, res) => {
 //   const uploadFile = upload.array("Napas", 10);

@@ -1,4 +1,8 @@
-const { AddFile, FindAllRepo } = require("../repository/upLoadRepository");
+const {
+  AddFile,
+  FindAllRepo,
+  DeleteOneRepo,
+} = require("../repository/upLoadRepository");
 async function UploadService(req, res) {
   console.log("file", req.file);
   const file = req.file;
@@ -22,4 +26,12 @@ async function FindAllService(req, res) {
     return res.send({ message: "loi" });
   }
 }
-module.exports = { UploadService, FindAllService };
+async function DeleteService(req, res) {
+  const files = await DeleteOneRepo(req.params.id);
+  if (files.deletedCount == 0) {
+    return res.status(400).json({ message: "Delete Fail" });
+  } else {
+    return res.status(200).json({ ...files, message: "Delete success" });
+  }
+}
+module.exports = { UploadService, FindAllService, DeleteService };

@@ -5,10 +5,5 @@ async function findByIdService(req, res) {
   console.log("dir", dir);
   console.log("files", files);
   res.download(dir);
-  //   if (files) {
-  //     return res.send(files);
-  //   } else {
-  //     return res.send({ message: "loi" });
-  //   }
 }
 module.exports = { findByIdService };
