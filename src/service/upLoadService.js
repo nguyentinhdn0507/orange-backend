@@ -9,17 +9,18 @@ async function UploadService(req, res) {
   if (!file) {
     const error = new Error("Please Upload a file");
     error.httpStatusCode = 400;
-    return next(error);
   }
   const dateUpload = Date.now();
-  console.log(Date.now());
-  const newFile = { ...file, dateUpload };
+  const status = false;
+  // console.log(Date.now());
+  const newFile = { ...file, dateUpload, status };
   await AddFile(newFile);
   await res.send(newFile);
 }
 async function FindAllService(req, res) {
   const files = await FindAllRepo();
   console.log("files", files);
+  console.log(files);
   if (files) {
     return res.send(files);
   } else {

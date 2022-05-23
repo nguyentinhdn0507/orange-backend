@@ -6,13 +6,17 @@ const {
   UpdateRepo,
 } = require("../repository/userRepository");
 const md5 = require("md5");
+const { throwToken } = require("../authen/auth");
 
 async function Login(req, res) {
   const login = await findUser(req.body.username, md5(req.body.password));
+
   if (login) {
-    return res.status(200).json({ message: "Dang nhap thanh cong" }).end();
+    const message = "Login Success";
+    const result = throwToken({ login });
+    return res.status(200).json({ token: result }).end();
   } else {
-    return res.status(400).json({ message: "Dang nhap that bai" }).end();
+    return res.status(400).json({ message: "Login Fail" }).end();
   }
 }
 //Get All

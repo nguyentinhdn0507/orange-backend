@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
   path: "String",
   size: Number,
   dateUpload: "Date",
-  //   destination:"String"
+  status: Boolean,
 });
 
 const Files = mongoose.model("File", schema);

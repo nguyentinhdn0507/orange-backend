@@ -1,8 +1,9 @@
 const express = require("express");
+const { verifyToken } = require("../authen/auth");
 const { Login, ListAll, Register, Update } = require("../service/userService");
 const userController = express.Router();
 
-userController.get("/", async (req, res) => {
+userController.get("/", verifyToken, async (req, res) => {
   // FindAll(req, res);
   ListAll(req, res);
 });
