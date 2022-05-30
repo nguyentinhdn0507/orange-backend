@@ -1,12 +1,9 @@
 const { connectDB } = require("./db");
 const express = require("express");
 const mongoose = require("mongoose");
-const userController = require("./src/controller/userController");
-const dataController = require("./src/controller/dataController");
-const uploadController = require("./src/controller/upLoadController");
 require("dotenv").config();
 const cors = require("cors");
-const downloadController = require("./src/controller/downloadController");
+const userRoute = require("./src/routes/userRoutes");
 const port = process.env.PORT;
 
 const main = () => {
@@ -14,10 +11,10 @@ const main = () => {
   const app = express();
   app.use(cors());
   app.use(express.json());
-  app.use("/user", userController);
-  app.use("/data", dataController);
-  app.use("/datafile", uploadController);
-  app.use("/download", downloadController);
+  app.use("/user", userRoute);
+  // app.use("/data", dataController);
+  // app.use("/datafile", uploadController);
+  // app.use("/download", downloadController);
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
   });

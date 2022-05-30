@@ -4,59 +4,83 @@ const {
   AddUser,
   findByUserName,
   UpdateRepo,
-} = require("../repository/userRepository");
+  deleteRepo,
+  findById,
+} = require("../repository/UserRepository");
 const md5 = require("md5");
 const { throwToken } = require("../authen/auth");
 
-async function Login(req, res) {
-  const login = await findUser(req.body.username, md5(req.body.password));
-
+async function login(username, password) {
+  const login = await findUser(username, md5(password));
+  console.log("login", login);
   if (login) {
-    const message = "Login Success";
-    const result = throwToken({ login });
-    return res.status(200).json({ token: result }).end();
+    const { _id, username } = login;
+    const result = throwToken({ _id, username });
+    return result;
   } else {
-    return res.status(400).json({ message: "Login Fail" }).end();
+    return;
+  }
+}
+async function findOneService(id) {
+  const findUser = await findById(id);
+  console.log("login", findUser);
+  if (findUser) {
+    return findUser;
+  } else {
+    return;
   }
 }
 //Get All
-async function ListAll(req, res) {
-  const listAllUser = await findAllRepo();
-  if (listAllUser) {
-    return res.status(200).json(listAllUser).end();
+async function showAll() {
+  const showAllUser = await findAllRepo();
+  if (showAllUser) {
+    return showAllUser;
   } else {
-    return res.status(400).json({ message: "Loi" }).end();
+    return;
   }
 }
 // Register
-async function Register(req, res) {
-  const existUserName = await findByUserName(req.body.username);
-  if (!existUserName) {
-    const user = {
-      username: req.body.username,
-      password: md5(req.body.password),
+async function registerService(user) {
+  const haveUserName = await findByUserName(user.username);
+  if (!haveUserName) {
+    const newUser = {
+      username: user.username,
+      password: md5(user.password),
     };
-    const result = await AddUser(user);
+    const result = await AddUser(newUser);
     if (result) {
-      return res.status(200).json(result).end();
+      return result;
     } else {
-      return res
-        .status(400)
-        .json({ message: "Da xay ra loi trong qua trinh dang ki" })
-        .end();
+      return;
     }
   } else {
-    return res.status(400).json({ message: "Ten dang nhap da ton tai" }).end();
+    return { Message: "Tên Đăng Nhập Đã Tồn Tại" };
   }
 }
 //Update
 
-async function Update(req, res) {
-  const update = await UpdateRepo(req.body.username, md5(req.body.password));
+async function updateService(id, password) {
+  const update = await UpdateRepo(id, md5(password));
   if (update.modifiedCount == 0) {
-    return res.status(400).json(update).end();
+    return;
   }
-  return res.status(200).json(update).end();
+  return update;
+}
+// delete
+
+async function deleteService(id) {
+  const deleteUser = await deleteRepo(id);
+  if (deleteUser.deletedCount == 0) {
+    return;
+  }
+  return deleteUser;
 }
 
-module.exports = { Login, ListAll, Register, Update };
+module.exports = {
+  login,
+  showAll,
+  registerService,
+  updateService,
+  deleteService,
+  findOneService,
+};

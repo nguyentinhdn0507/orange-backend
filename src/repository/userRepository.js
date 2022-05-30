@@ -1,11 +1,15 @@
+const UserModel = require("../models/usermodel");
 const mongoose = require("mongoose");
-const schema = new mongoose.Schema({ username: "string", password: "string" });
-const User = mongoose.model("user", schema);
-// connectDB();
+const User = UserModel;
 async function findByUserName(username) {
   const query = { username: [username] };
   const user = await User.findOne(query);
   return user;
+}
+async function findById(id) {
+  const query = { _id: mongoose.Types.ObjectId(id) };
+  const userId = await User.findOne(query);
+  return userId;
 }
 async function findUser(username, password) {
   const query = { username: [username], password: [password] };
@@ -29,13 +33,26 @@ async function AddUser(user) {
   console.log(newUser);
   return newUser;
 }
-async function UpdateRepo(username, password) {
+async function deleteRepo(id) {
+  const newUser = await User.deleteOne({ _id: mongoose.Types.ObjectId(id) });
+  console.log("user", newUser);
+  return newUser;
+}
+async function UpdateRepo(id, password) {
   const user = await User.updateOne(
-    { username: username },
+    { _id: mongoose.Types.ObjectId(id) },
     { password: password }
   );
   console.log("user", user);
   return user;
 }
 
-module.exports = { findByUserName, findUser, findAllRepo, AddUser, UpdateRepo };
+module.exports = {
+  findByUserName,
+  findById,
+  findUser,
+  findAllRepo,
+  AddUser,
+  UpdateRepo,
+  deleteRepo,
+};
