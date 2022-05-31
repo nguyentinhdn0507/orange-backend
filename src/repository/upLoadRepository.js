@@ -1,25 +1,19 @@
 const mongoose = require("mongoose");
 // const schema = new mongoose.Schema({})
-const schema = new mongoose.Schema({
-  fieldname: "String",
-  originalname: "String",
-  encoding: "String",
-  mimetype: "String",
-  destination: "String",
-  filename: "String",
-  path: "String",
-  size: Number,
-  dateUpload: "Date",
-  status: Boolean,
-});
+const UploadModel = require("../models/uploadmodel");
 
-const Files = mongoose.model("File", schema);
+async function FindAllRepo() {
+  const files = await UploadModel.find();
+  return files;
+}
 async function findByIdRepo(id) {
-  const result = await Files.findOne({ _id: mongoose.Types.ObjectId(id) });
+  const result = await UploadModel.findOne({
+    _id: mongoose.Types.ObjectId(id),
+  });
   return result;
 }
-async function AddFile(file) {
-  const newFile = new Files(file);
+async function AddFileRepo(file) {
+  const newFile = new UploadModel(file);
   await newFile.save(function (err) {
     if (err) {
       return handleError(err);
@@ -29,12 +23,10 @@ async function AddFile(file) {
   return newFile;
 }
 async function DeleteOneRepo(id) {
-  const result = await Files.deleteOne({ _id: mongoose.Types.ObjectId(id) });
+  const result = await UploadModel.deleteOne({
+    _id: mongoose.Types.ObjectId(id),
+  });
   return result;
 }
-async function FindAllRepo() {
-  const files = await Files.find();
-  return files;
-}
 
-module.exports = { AddFile, FindAllRepo, findByIdRepo, DeleteOneRepo };
+module.exports = { AddFileRepo, FindAllRepo, findByIdRepo, DeleteOneRepo };

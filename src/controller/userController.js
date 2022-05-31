@@ -1,14 +1,20 @@
 const {
-  showAll,
-  login,
-  deleteService,
+  // showAll,
+  // login,
+  // deleteService,
+  // registerService,
+  // findOneService,
+  // updateService,
+  loginService,
+  showAllUserService,
   registerService,
+  updateUserService,
+  deleteUserService,
   findOneService,
-  updateService,
 } = require("../service/userService");
 
 async function showAllController(req, res) {
-  const showAllUser = await showAll();
+  const showAllUser = await showAllUserService();
   if (showAllUser) {
     return res.status(200).json(showAllUser).end();
   } else {
@@ -17,7 +23,7 @@ async function showAllController(req, res) {
 }
 async function loginController(req, res) {
   const { username, password } = req.body;
-  const token = await login(username, password);
+  const token = await loginService(username, password);
   console.log("token", token);
   if (token) {
     return res.status(200).json({ token }).end();
@@ -36,14 +42,17 @@ async function findUserIdController(req, res) {
 async function registerController(req, res) {
   const register = await registerService(req.body);
   console.log("register", register);
+  if (register.Message) {
+    return res.status(409).json({ message: "UserName Exits" }).end();
+  }
   if (register) {
-    return res.status(200).json(register).end;
+    return res.status(200).json(register).end();
   } else {
     return res.status(400).json({ message: "Error" }).end();
   }
 }
 async function deleteController(req, res) {
-  const result = await deleteService(req.params.id);
+  const result = await deleteUserService(req.params.id);
   if (result) {
     return res.status(200).json({ message: "Delete Success", result }).end();
   } else {
@@ -51,7 +60,7 @@ async function deleteController(req, res) {
   }
 }
 async function updateController(req, res) {
-  const result = await updateService(req.params.id, req.body.password);
+  const result = await updateUserService(req.params.id, req.body);
   if (result) {
     return res.status(200).json({ message: "Update Success", result }).end();
   } else {

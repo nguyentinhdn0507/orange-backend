@@ -6,6 +6,13 @@ const expired = process.env.EXPIRED_TOKEN;
 function throwToken(data) {
   return jwt.sign(data, secretKey, { expiresIn: expired });
 }
+
+const generateRefreshToken = (data) => {
+  const accessToken = jwt.sign(data, secretKey, {
+    expiresIn: process.env.REFRESH_TOKEN,
+  });
+  return accessToken;
+};
 const verifyToken = (req, res, next) => {
   const header = req.header("Authorization");
   const token = header && header.split(" ")[1];
@@ -18,4 +25,8 @@ const verifyToken = (req, res, next) => {
     return res.status(403).json({ message: error });
   }
 };
-module.exports = { throwToken, verifyToken };
+module.exports = {
+  throwToken,
+  verifyToken,
+  generateRefreshToken,
+};

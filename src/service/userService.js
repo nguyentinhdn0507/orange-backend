@@ -1,20 +1,29 @@
 const {
-  findUser,
-  findAllRepo,
-  AddUser,
-  findByUserName,
-  UpdateRepo,
-  deleteRepo,
-  findById,
+  findByUserNameRepo,
+  // findById,
+  findUserByIdRepo,
+  findUserRepo,
+  // findUser,
+  // findAllRepo,
+  findAlUserRepo,
+  AddUserRepo,
+  UpdateUserRepo,
+  // AddUser,
+  // UpdateRepo,
+  // deleteRepo,
+  deleteUserRepo,
 } = require("../repository/UserRepository");
 const md5 = require("md5");
-const { throwToken } = require("../authen/auth");
+const { throwToken, generateRefreshToken } = require("../authen/auth");
 
-async function login(username, password) {
-  const login = await findUser(username, md5(password));
+async function loginService(username, password) {
+  const login = await findUserRepo(username, md5(password));
   console.log("login", login);
   if (login) {
     const { _id, username } = login;
+    await UpdateUserRepo(_id, {
+      refreshToken: generateRefreshToken({ _id, username }),
+    });
     const result = throwToken({ _id, username });
     return result;
   } else {
@@ -22,7 +31,7 @@ async function login(username, password) {
   }
 }
 async function findOneService(id) {
-  const findUser = await findById(id);
+  const findUser = await findUserByIdRepo(id);
   console.log("login", findUser);
   if (findUser) {
     return findUser;
@@ -31,8 +40,8 @@ async function findOneService(id) {
   }
 }
 //Get All
-async function showAll() {
-  const showAllUser = await findAllRepo();
+async function showAllUserService() {
+  const showAllUser = await findAlUserRepo();
   if (showAllUser) {
     return showAllUser;
   } else {
@@ -41,13 +50,13 @@ async function showAll() {
 }
 // Register
 async function registerService(user) {
-  const haveUserName = await findByUserName(user.username);
+  const haveUserName = await findByUserNameRepo(user.username);
   if (!haveUserName) {
     const newUser = {
       username: user.username,
       password: md5(user.password),
     };
-    const result = await AddUser(newUser);
+    const result = await AddUserRepo(newUser);
     if (result) {
       return result;
     } else {
@@ -59,8 +68,8 @@ async function registerService(user) {
 }
 //Update
 
-async function updateService(id, password) {
-  const update = await UpdateRepo(id, md5(password));
+async function updateUserService(id, password) {
+  const update = await UpdateUserRepo(id, md5(password));
   if (update.modifiedCount == 0) {
     return;
   }
@@ -68,8 +77,8 @@ async function updateService(id, password) {
 }
 // delete
 
-async function deleteService(id) {
-  const deleteUser = await deleteRepo(id);
+async function deleteUserService(id) {
+  const deleteUser = await deleteUserRepo(id);
   if (deleteUser.deletedCount == 0) {
     return;
   }
@@ -77,10 +86,10 @@ async function deleteService(id) {
 }
 
 module.exports = {
-  login,
-  showAll,
+  loginService,
+  showAllUserService,
   registerService,
-  updateService,
-  deleteService,
+  updateUserService,
+  deleteUserService,
   findOneService,
 };

@@ -1,26 +1,26 @@
-const UserModel = require("../models/usermodel");
 const mongoose = require("mongoose");
+const UserModel = require("../models/usermodel");
 const User = UserModel;
-async function findByUserName(username) {
+async function findByUserNameRepo(username) {
   const query = { username: [username] };
   const user = await User.findOne(query);
   return user;
 }
-async function findById(id) {
+async function findUserByIdRepo(id) {
   const query = { _id: mongoose.Types.ObjectId(id) };
   const userId = await User.findOne(query);
   return userId;
 }
-async function findUser(username, password) {
+async function findUserRepo(username, password) {
   const query = { username: [username], password: [password] };
   const user = await User.findOne(query);
   return user;
 }
-async function findAllRepo() {
+async function findAlUserRepo() {
   const user = await User.find();
   return user;
 }
-async function AddUser(user) {
+async function AddUserRepo(user) {
   const newUser = new User({
     username: user.username,
     password: user.password,
@@ -33,26 +33,26 @@ async function AddUser(user) {
   console.log(newUser);
   return newUser;
 }
-async function deleteRepo(id) {
+async function deleteUserRepo(id) {
   const newUser = await User.deleteOne({ _id: mongoose.Types.ObjectId(id) });
   console.log("user", newUser);
   return newUser;
 }
-async function UpdateRepo(id, password) {
-  const user = await User.updateOne(
+async function UpdateUserRepo(id, user) {
+  const updateUser = await User.updateOne(
     { _id: mongoose.Types.ObjectId(id) },
-    { password: password }
+    { password: user.password, refreshToken: user.refreshToken }
   );
-  console.log("user", user);
-  return user;
+  console.log("user", updateUser);
+  return updateUser;
 }
 
 module.exports = {
-  findByUserName,
-  findById,
-  findUser,
-  findAllRepo,
-  AddUser,
-  UpdateRepo,
-  deleteRepo,
+  findByUserNameRepo,
+  findUserByIdRepo,
+  findUserRepo,
+  findAlUserRepo,
+  AddUserRepo,
+  UpdateUserRepo,
+  deleteUserRepo,
 };

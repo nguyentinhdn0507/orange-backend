@@ -15,16 +15,14 @@ userRoute.get("/", verifyToken, async (req, res) => {
 userRoute.get("/:id", async (req, res) => {
   findUserIdController(req, res);
 });
-
+userRoute.post("/register", async (req, res) => {
+  registerController(req, res);
+});
 userRoute.post("/login", async (req, res) => {
   loginController(req, res);
 });
 userRoute.delete("/:id", async (req, res) => {
   deleteController(req, res);
-});
-
-userRoute.post("/register", async (req, res) => {
-  registerController(req, res);
 });
 
 userRoute.put("/:id", async (req, res) => {

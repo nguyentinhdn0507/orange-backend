@@ -1,38 +1,48 @@
 const {
-  AddFile,
+  AddFileRepo,
+  findByIdRepo,
   FindAllRepo,
   DeleteOneRepo,
 } = require("../repository/upLoadRepository");
-async function UploadService(req, res) {
-  console.log("file", req.file);
-  const file = req.file;
+
+async function UploadService(file) {
+  console.log("file", file);
   if (!file) {
     const error = new Error("Please Upload a file");
     error.httpStatusCode = 400;
+    return error;
   }
   const dateUpload = Date.now();
   const status = false;
   // console.log(Date.now());
   const newFile = { ...file, dateUpload, status };
-  await AddFile(newFile);
-  await res.send(newFile);
+  return AddFileRepo(newFile);
 }
-async function FindAllService(req, res) {
+async function findByIdService(id) {
+  const file = await findByIdRepo(id);
+  return file;
+}
+async function FindAllService() {
   const files = await FindAllRepo();
   console.log("files", files);
   console.log(files);
   if (files) {
-    return res.send(files);
+    return files;
   } else {
-    return res.send({ message: "loi" });
+    return;
   }
 }
-async function DeleteService(req, res) {
-  const files = await DeleteOneRepo(req.params.id);
-  if (files.deletedCount == 0) {
-    return res.status(400).json({ message: "Delete Fail" });
+async function DeleteFileService(id) {
+  const deleteFile = await DeleteOneRepo(id);
+  if (deleteFile.deletedCount == 0) {
+    return deleteFile;
   } else {
-    return res.status(200).json({ ...files, message: "Delete success" });
+    return;
   }
 }
-module.exports = { UploadService, FindAllService, DeleteService };
+module.exports = {
+  findByIdService,
+  UploadService,
+  FindAllService,
+  DeleteFileService,
+};
