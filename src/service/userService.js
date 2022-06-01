@@ -30,8 +30,8 @@ async function loginService(username, password) {
     return;
   }
 }
-async function findOneService(id) {
-  const findUser = await findUserByIdRepo(id);
+function findOneService(id) {
+  const findUser = findUserByIdRepo(id);
   console.log("login", findUser);
   if (findUser) {
     return findUser;
@@ -40,8 +40,8 @@ async function findOneService(id) {
   }
 }
 //Get All
-async function showAllUserService() {
-  const showAllUser = await findAlUserRepo();
+function showAllUserService() {
+  const showAllUser = findAlUserRepo();
   if (showAllUser) {
     return showAllUser;
   } else {
@@ -49,14 +49,14 @@ async function showAllUserService() {
   }
 }
 // Register
-async function registerService(user) {
-  const haveUserName = await findByUserNameRepo(user.username);
+function registerService(user) {
+  const haveUserName = findByUserNameRepo(user.username);
   if (!haveUserName) {
     const newUser = {
       username: user.username,
       password: md5(user.password),
     };
-    const result = await AddUserRepo(newUser);
+    const result = AddUserRepo(newUser);
     if (result) {
       return result;
     } else {
@@ -67,24 +67,18 @@ async function registerService(user) {
   }
 }
 //Update
-
-async function updateUserService(id, password) {
-  const update = await UpdateUserRepo(id, md5(password));
-  if (update.modifiedCount == 0) {
-    return;
-  }
-  return update;
+function updateUserService(id, user) {
+  return UpdateUserRepo(id, user);
+  // console.log("update", update);
 }
 // delete
-
-async function deleteUserService(id) {
-  const deleteUser = await deleteUserRepo(id);
+function deleteUserService(id) {
+  const deleteUser = deleteUserRepo(id);
   if (deleteUser.deletedCount == 0) {
     return;
   }
   return deleteUser;
 }
-
 module.exports = {
   loginService,
   showAllUserService,

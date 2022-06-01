@@ -8,25 +8,13 @@ const {
   updateController,
   findUserIdController,
 } = require("../controller/userController");
+const { ContainerError } = require("../utils/ContainerError");
 const userRoute = express.Router();
-userRoute.get("/", verifyToken, async (req, res) => {
-  showAllController(req, res);
-});
-userRoute.get("/:id", async (req, res) => {
-  findUserIdController(req, res);
-});
-userRoute.post("/register", async (req, res) => {
-  registerController(req, res);
-});
-userRoute.post("/login", async (req, res) => {
-  loginController(req, res);
-});
-userRoute.delete("/:id", async (req, res) => {
-  deleteController(req, res);
-});
-
-userRoute.put("/:id", async (req, res) => {
-  updateController(req, res);
-});
+userRoute.get("/", verifyToken, showAllController);
+userRoute.get("/:id", ContainerError(findUserIdController));
+userRoute.post("/register", ContainerError(registerController));
+userRoute.post("/login", ContainerError(loginController));
+userRoute.delete("/:id", ContainerError(deleteController));
+userRoute.put("/:id", ContainerError(updateController));
 
 module.exports = userRoute;

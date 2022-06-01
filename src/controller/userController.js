@@ -1,10 +1,4 @@
 const {
-  // showAll,
-  // login,
-  // deleteService,
-  // registerService,
-  // findOneService,
-  // updateService,
   loginService,
   showAllUserService,
   registerService,
@@ -12,7 +6,6 @@ const {
   deleteUserService,
   findOneService,
 } = require("../service/userService");
-
 async function showAllController(req, res) {
   const showAllUser = await showAllUserService();
   if (showAllUser) {
@@ -61,7 +54,7 @@ async function deleteController(req, res) {
 }
 async function updateController(req, res) {
   const result = await updateUserService(req.params.id, req.body);
-  if (result) {
+  if (result.modifiedCount !== 0) {
     return res.status(200).json({ message: "Update Success", result }).end();
   } else {
     return res.status(400).json({ message: "Error" }).end();
