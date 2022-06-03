@@ -13,7 +13,7 @@ async function findUserByIdRepo(id) {
   return userId;
 }
 async function findUserRepo(username, password) {
-  const query = { username: [username], password: [password] };
+  const query = { username: username, password: password };
   const user = await User.findOne(query);
   return user;
 }
@@ -41,10 +41,7 @@ async function deleteUserRepo(id) {
 }
 function UpdateUserRepo(id, user) {
   console.log("user", user);
-  return User.updateOne(
-    { _id: mongoose.Types.ObjectId(id) },
-    { username: user.username, password: md5(user.password) }
-  );
+  return User.updateOne({ _id: mongoose.Types.ObjectId(id) }, user);
 }
 
 module.exports = {
