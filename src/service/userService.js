@@ -8,7 +8,7 @@ const {
   deleteUserRepo,
   findUserRepo,
   AddUserRepo,
-} = require("../repository/UsRepository");
+} = require("../repository/userRepository");
 
 async function loginService(username, password) {
   const login = await findUserRepo(username, md5(password));
