@@ -12,11 +12,12 @@ const port = process.env.PORT;
 const main = () => {
   connectDB();
   const app = express();
- 
+
   app.use(cors());
   app.use(express.json());
-  app.use("/user", userRoute);
   app.use("/data", uploadRoute);
+  app.use("/user", userRoute);
+
   app.use("/refreshtoken", refreshTokenRoute);
   app.use(handleError);
   app.listen(port, () => {

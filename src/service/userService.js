@@ -6,7 +6,7 @@ const {
   UpdateUserRepo,
   deleteUserRepo,
   findUserRepo,
-} = require("/app/src/repository/UserRepository");
+} = require("../repository/UserRepository");
 const md5 = require("md5");
 const { throwToken, generateRefreshToken } = require("../authen/auth");
 
