@@ -1,16 +1,10 @@
 const {
   findByUserNameRepo,
-  // findById,
   findUserByIdRepo,
   findUserRepo,
-  // findUser,
-  // findAllRepo,
   findAlUserRepo,
   AddUserRepo,
   UpdateUserRepo,
-  // AddUser,
-  // UpdateRepo,
-  // deleteRepo,
   deleteUserRepo,
 } = require("../repository/UserRepository");
 const md5 = require("md5");

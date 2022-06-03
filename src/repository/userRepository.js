@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
 const md5 = require("md5");
+const mongoose = require("mongoose");
 const UserModel = require("../models/usermodel");
 const User = UserModel;
 async function findByUserNameRepo(username) {
@@ -43,7 +43,7 @@ function UpdateUserRepo(id, user) {
   console.log("user", user);
   return User.updateOne(
     { _id: mongoose.Types.ObjectId(id) },
-    {username: user.username, password: user.password }
+    { username: user.username, password: md5(user.password) }
   );
 }
 
