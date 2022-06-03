@@ -5,7 +5,7 @@ require("dotenv").config();
 const cors = require("cors");
 const userRoute = require("./src/routes/userRoutes");
 const uploadRoute = require("./src/routes/uploadRoutes");
-const refreshTokenRoute = require("./src/routes/refreshTokenRoute");
+// const refreshTokenRoute = require("./src/routes/refreshTokenRoute");
 const { handleError } = require("./src/midleware/handleError");
 const port = process.env.PORT;
 
@@ -18,7 +18,7 @@ const main = () => {
   app.use("/data", uploadRoute);
   app.use("/user", userRoute);
 
-  app.use("/refreshtoken", refreshTokenRoute);
+  // app.use("/refreshtoken", refreshTokenRoute);
   app.use(handleError);
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
