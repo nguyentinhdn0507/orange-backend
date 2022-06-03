@@ -1,12 +1,3 @@
-// const {
-//   findByUserNameRepo,
-//   findUserByIdRepo,
-//   findAlUserRepo,
-//   AddUserRepo,
-//   UpdateUserRepo,
-//   deleteUserRepo,
-//   findUserRepo,
-// } = require("../repository/UserRepository");
 const md5 = require("md5");
 const { throwToken, generateRefreshToken } = require("../authen/auth");
 const {
@@ -16,6 +7,7 @@ const {
   UpdateUserRepo,
   deleteUserRepo,
   findUserRepo,
+  AddUserRepo,
 } = require("../repository/UserRepository");
 
 async function loginService(username, password) {
@@ -51,8 +43,9 @@ function showAllUserService() {
   }
 }
 // Register
-function registerService(user) {
-  const haveUserName = findByUserNameRepo(user.username);
+async function registerService(user) {
+  const haveUserName = await findByUserNameRepo(user.username);
+  console.log(haveUserName);
   if (!haveUserName) {
     const newUser = {
       username: user.username,
@@ -71,7 +64,6 @@ function registerService(user) {
 //Update
 function updateUserService(id, user) {
   return UpdateUserRepo(id, user);
-  // console.log("update", update);
 }
 // delete
 function deleteUserService(id) {
