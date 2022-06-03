@@ -15,6 +15,7 @@ const {
   findByUserNameRepo,
   UpdateUserRepo,
   deleteUserRepo,
+  findUserRepo,
 } = require("../repository/UserRepository");
 
 async function loginService(username, password) {
