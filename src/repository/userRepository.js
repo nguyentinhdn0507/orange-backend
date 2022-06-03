@@ -1,7 +1,7 @@
-const md5 = require("md5");
-const mongoose = require("mongoose");
-const UserModel = require("../models/usermodel");
-const User = UserModel;
+// const md5 = require("md5");
+// const mongoose = require("mongoose");
+// const UserModel = require("../models/usermodel");
+// const User = UserModel;
 async function findByUserNameRepo(username) {
   // const query = { username: [username] };
   // const user = await User.findOne(query);
