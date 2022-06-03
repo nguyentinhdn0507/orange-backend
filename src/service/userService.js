@@ -1,14 +1,21 @@
-const {
-  findByUserNameRepo,
-  findUserByIdRepo,
-  findAlUserRepo,
-  AddUserRepo,
-  UpdateUserRepo,
-  deleteUserRepo,
-  findUserRepo,
-} = require("../repository/UserRepository");
+// const {
+//   findByUserNameRepo,
+//   findUserByIdRepo,
+//   findAlUserRepo,
+//   AddUserRepo,
+//   UpdateUserRepo,
+//   deleteUserRepo,
+//   findUserRepo,
+// } = require("../repository/UserRepository");
 const md5 = require("md5");
 const { throwToken, generateRefreshToken } = require("../authen/auth");
+const {
+  findAllUserRepo,
+  findUserByIdRepo,
+  findByUserNameRepo,
+  UpdateUserRepo,
+  deleteUserRepo,
+} = require("../repository/UserRepository");
 
 async function loginService(username, password) {
   const login = await findUserRepo(username, md5(password));
@@ -35,7 +42,7 @@ function findOneService(id) {
 }
 //Get All
 function showAllUserService() {
-  const showAllUser = findAlUserRepo();
+  const showAllUser = findAllUserRepo();
   if (showAllUser) {
     return showAllUser;
   } else {

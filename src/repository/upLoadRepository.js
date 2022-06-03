@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// const schema = new mongoose.Schema({})
 const UploadModel = require("../models/uploadmodel");
 
 async function FindAllRepo() {
