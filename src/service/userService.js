@@ -1,12 +1,12 @@
 const {
   findByUserNameRepo,
   findUserByIdRepo,
-  findUserRepo,
   findAlUserRepo,
   AddUserRepo,
   UpdateUserRepo,
   deleteUserRepo,
-} = require("../repository/UserRepository");
+  findUserRepo,
+} = require("/app/src/repository/UserRepository");
 const md5 = require("md5");
 const { throwToken, generateRefreshToken } = require("../authen/auth");
 
