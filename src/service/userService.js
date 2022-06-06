@@ -1,3 +1,4 @@
+const { OAuth2Client } = require("google-auth-library");
 const md5 = require("md5");
 const { throwToken, generateRefreshToken } = require("../authen/auth");
 const {
@@ -9,6 +10,9 @@ const {
   findUserRepo,
   AddUserRepo,
 } = require("../repository/userRepository");
+
+const client = new OAuth2Client(`${process.env.MAIL_CLIENT_ID}`);
+const CLIENT_URL = `${process.env.BASE_URL}`;
 
 async function loginService(username, password) {
   const login = await findUserRepo(username, md5(password));

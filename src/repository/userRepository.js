@@ -7,6 +7,33 @@ async function findByUserNameRepo(username) {
   const user = await User.findOne(query);
   return user;
 }
+async function findByUserEmailRepo(username) {
+  const query = { account: [email] };
+  const user = await User.findOne(query);
+  return user;
+}
+
+async function AddUserRepo(user) {
+  const newUser = new User({
+    username: user.username,
+    password: user.password,
+  });
+  await newUser.save(function (err) {
+    if (err) {
+      return handleError(err);
+    }
+  });
+  console.log(newUser);
+  return newUser;
+}
+async function addUserGoogleRepo() {
+ 
+  
+}
+
+
+
+
 async function findUserByIdRepo(id) {
   const query = { _id: mongoose.Types.ObjectId(id) };
   const userId = await User.findOne(query);
@@ -21,19 +48,7 @@ async function findAllUserRepo() {
   const user = await User.find();
   return user;
 }
-async function AddUserRepo(user) {
-  const newUser = new User({
-    username: user.username,
-    password: user.password,
-  });
-  await newUser.save(function (err) {
-    if (err) {
-      return handleError(err);
-    }
-  });
-  console.log(newUser);
-  return newUser;
-}
+
 async function deleteUserRepo(id) {
   const newUser = await User.deleteOne({ _id: mongoose.Types.ObjectId(id) });
   console.log("user", newUser);
@@ -52,4 +67,5 @@ module.exports = {
   AddUserRepo,
   UpdateUserRepo,
   deleteUserRepo,
+  findByUserEmailRepo,
 };

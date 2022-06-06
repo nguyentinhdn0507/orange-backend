@@ -14,12 +14,16 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "fs": "0.0.1-security",
+    "google-auth-library": "^8.0.2",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
     "mongoose": "^6.3.3",
     "multer": "^1.4.4",
     "nodemon": "^2.0.16",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-google-strategy": "^1.0.3",
     "validator": "^13.7.0"
   }
 }
